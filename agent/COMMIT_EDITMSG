@@ -1,5 +1,0 @@
-fix: restore Anam voice+avatar (full lip-sync), keep sampleRate 24000 fix
-
-- Reverted audio output restore hack — let Anam fully own session.output.audio
-- Anam handles both voice re-publish AND lip-sync as designed
-- Kept sampleRate 16000→24000 fix (was causing audio to play 1.5x too fast)
