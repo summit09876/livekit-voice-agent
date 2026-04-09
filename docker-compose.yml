@@ -1,0 +1,26 @@
+services:
+  # ── AI Agent Worker ────────────────────────────────────────────────────────
+  # Connects to LiveKit Cloud, handles STT → LLM → TTS + Anam avatar
+  agent:
+    container_name: livekit-agent
+    build:
+      context: ./agent
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env.local
+
+  # ── React Frontend ─────────────────────────────────────────────────────────
+  # Next.js UI served at /voice-agent-livekit (proxied via Caddy)
+  frontend:
+    container_name: livekit-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      ALLOW_INSECURE_TOKEN_ENDPOINT: "true"
+    ports:
+      - "3010:3000"

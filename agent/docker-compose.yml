@@ -1,0 +1,7 @@
+services:
+  livekit-agent-node:
+    container_name: livekit-agent-node
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env.local

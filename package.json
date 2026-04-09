@@ -1,0 +1,17 @@
+{
+  "name": "livekit-voice-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LiveKit Voice Agent — monorepo (agent worker + React frontend)",
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "dev": "pnpm --parallel -r dev",
+    "build": "pnpm -r build",
+    "agent:dev": "pnpm --filter agent dev",
+    "agent:build": "pnpm --filter agent build",
+    "agent:start": "pnpm --filter agent start",
+    "frontend:dev": "pnpm --filter frontend dev",
+    "frontend:build": "pnpm --filter frontend build",
+    "frontend:start": "pnpm --filter frontend start"
+  }
+}
