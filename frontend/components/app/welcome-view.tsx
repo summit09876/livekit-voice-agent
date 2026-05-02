@@ -46,19 +46,40 @@ export const WelcomeView = ({
         </Button>
       </section>
 
+      {/* Branding footer */}
       <div className="fixed bottom-5 left-0 flex w-full items-center justify-center">
-        <p className="text-muted-foreground max-w-prose pt-1 text-xs leading-5 font-normal text-pretty md:text-sm">
-          Need help getting set up? Check out the{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://docs.livekit.io/agents/start/voice-ai/"
-            className="underline"
+        <p
+          className="text-muted-foreground text-xs leading-5 font-normal"
+          style={{
+            animation: 'fadeInUp 1.2s ease forwards',
+          }}
+        >
+          Developed by{' '}
+          <span
+            style={{
+              background: 'linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #6366f1)',
+              backgroundSize: '200% auto',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              animation: 'fadeInUp 1.2s ease forwards, shimmer 3s linear infinite',
+              fontWeight: 600,
+            }}
           >
-            Voice AI quickstart
-          </a>
-          .
+            Sumit Tayade
+          </span>
         </p>
+
+        <style>{`
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes shimmer {
+            0%   { background-position: 0% center; }
+            100% { background-position: 200% center; }
+          }
+        `}</style>
       </div>
     </div>
   );

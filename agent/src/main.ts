@@ -71,7 +71,7 @@ export default defineAgent({
     const avatarSession = new AvatarSession({
       personaConfig: {
         name: 'Elena',
-        avatarId: '5f22cb47-d90a-4cc6-b862-3129113c0703',
+        avatarId: '9da8944e-a584-4453-b455-ad3be0d0f63d',
       },
       avatarParticipantIdentity: 'Elena',
     });

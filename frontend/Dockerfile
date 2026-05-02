@@ -12,7 +12,7 @@ COPY . .
 # .env.local is passed as build args for NEXT_PUBLIC_ vars at build time
 # At runtime it is injected via docker-compose env_file
 ARG NEXT_PUBLIC_AGENT_NAME=Lily
-ARG NEXT_PUBLIC_CONN_DETAILS_ENDPOINT=/voice-agent-livekit/api/token
+ARG NEXT_PUBLIC_CONN_DETAILS_ENDPOINT=/voice-agent/api/token
 ENV NEXT_PUBLIC_AGENT_NAME=$NEXT_PUBLIC_AGENT_NAME
 ENV NEXT_PUBLIC_CONN_DETAILS_ENDPOINT=$NEXT_PUBLIC_CONN_DETAILS_ENDPOINT
 RUN pnpm build
