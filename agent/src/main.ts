@@ -34,7 +34,7 @@ export default defineAgent({
       tts: new inference.TTS({
         model: 'cartesia/sonic-3',
         voice: '9626c31c-bec5-4cca-baa8-f8ba9e84c8bc',
-        sampleRate: 24000, // Fixed: was 16000, causing audio to play 1.5x too fast
+        sampleRate: 24000,
       }),
       turnDetection: new livekit.turnDetector.MultilingualModel(),
       vad: ctx.proc.userData.vad! as silero.VAD,
@@ -64,21 +64,29 @@ export default defineAgent({
 
     await ctx.connect();
 
-    // Start Anam avatar session AFTER room is connected.
-    // Anam takes over session.output.audio via DataStreamAudioOutput —
-    // this routes TTS audio to Anam for lip-sync AND Anam re-publishes
-    // the voice to the room. Both avatar visuals and voice come from Anam.
-    const avatarSession = new AvatarSession({
-      personaConfig: {
-        name: 'Elena',
-        avatarId: '9da8944e-a584-4453-b455-ad3be0d0f63d',
-      },
-      avatarParticipantIdentity: 'Elena',
-    });
-    await avatarSession.start(session, ctx.room);
+    // Try Anam avatar - fall back to direct TTS if rate-limited or unavailable
+    let avatarStarted = false;
+    try {
+      const avatarSession = new AvatarSession({
+        personaConfig: {
+          name: 'Elena',
+          avatarId: '9da8944e-a584-4453-b455-ad3be0d0f63d',
+        },
+        avatarParticipantIdentity: 'Elena',
+      });
+      await avatarSession.start(session, ctx.room);
+      avatarStarted = true;
+      console.log('[Agent] Anam avatar started successfully');
+    } catch (err: any) {
+      // Graceful fallback - use direct TTS without avatar
+      console.warn(`[Agent] Anam avatar unavailable (${err.message?.substring(0, 80)}), using direct TTS`);
+    }
 
+    // Generate greeting - works with or without Anam
     session.generateReply({
-      instructions: 'Greet the user warmly and introduce yourself as Elena.',
+      instructions: avatarStarted
+        ? 'Greet the user warmly and introduce yourself as Elena.'
+        : 'Greet the user warmly and introduce yourself as Lily.',
     });
   },
 });
