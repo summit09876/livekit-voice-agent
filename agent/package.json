@@ -35,7 +35,6 @@
   },
   "dependencies": {
     "@livekit/agents": "^1.0.46",
-    "@livekit/agents-plugin-anam": "latest",
     "@livekit/agents-plugin-livekit": "^1.0.46",
     "@livekit/agents-plugin-silero": "^1.0.46",
     "@livekit/noise-cancellation-node": "^0.1.9",

@@ -8,7 +8,6 @@ import {
   metrics,
   voice,
 } from '@livekit/agents';
-import { AvatarSession } from '@livekit/agents-plugin-anam';
 import * as livekit from '@livekit/agents-plugin-livekit';
 import * as silero from '@livekit/agents-plugin-silero';
 import { BackgroundVoiceCancellation } from '@livekit/noise-cancellation-node';
@@ -64,29 +63,8 @@ export default defineAgent({
 
     await ctx.connect();
 
-    // Try Anam avatar - fall back to direct TTS if rate-limited or unavailable
-    let avatarStarted = false;
-    try {
-      const avatarSession = new AvatarSession({
-        personaConfig: {
-          name: 'Elena',
-          avatarId: '9da8944e-a584-4453-b455-ad3be0d0f63d',
-        },
-        avatarParticipantIdentity: 'Elena',
-      });
-      await avatarSession.start(session, ctx.room);
-      avatarStarted = true;
-      console.log('[Agent] Anam avatar started successfully');
-    } catch (err: any) {
-      // Graceful fallback - use direct TTS without avatar
-      console.warn(`[Agent] Anam avatar unavailable (${err.message?.substring(0, 80)}), using direct TTS`);
-    }
-
-    // Generate greeting - works with or without Anam
     session.generateReply({
-      instructions: avatarStarted
-        ? 'Greet the user warmly and introduce yourself as Elena.'
-        : 'Greet the user warmly and introduce yourself as Lily.',
+      instructions: 'Greet the user warmly and introduce yourself as Lily.',
     });
   },
 });
